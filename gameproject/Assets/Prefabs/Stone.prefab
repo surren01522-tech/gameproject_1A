@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stone
   level: 1
-  hp: 3
+  hp: 9999
   isMerging: 0
   StoneSprite: {fileID: 4883055910439593543}
   StoneType:
