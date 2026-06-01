@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -11,7 +12,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public GameState CurrentState { get; private set; } = GameState.Playing;
+    [Header("State")]
+    [SerializeField] private GameState currentState = GameState.Playing;
+    [SerializeField] private string currentStageName = "";
+
+    public GameState CurrentState => currentState;
+    public string CurrentStageName => currentStageName;
+
+    public event System.Action<GameState> StateChanged;
 
     private void Awake()
     {
@@ -24,20 +32,42 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    public void StartGame(StageData stageData)
+    {
+        currentStageName = stageData != null ? stageData.stageName : "";
+        ChangeState(GameState.Playing);
+    }
+
     public bool IsPlaying()
     {
-        return CurrentState == GameState.Playing;
+        return currentState == GameState.Playing;
     }
 
     public void SetClear()
     {
-        CurrentState = GameState.Clear;
-        Debug.Log("Game State: Clear");
+        ChangeState(GameState.Clear);
     }
 
     public void SetFail()
     {
-        CurrentState = GameState.Fail;
-        Debug.Log("Game State: Fail");
+        ChangeState(GameState.Fail);
+    }
+
+    public void RestartCurrentScene()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(activeScene.buildIndex);
+    }
+
+    private void ChangeState(GameState nextState)
+    {
+        if (currentState == nextState)
+        {
+            return;
+        }
+
+        currentState = nextState;
+        Debug.Log($"Game State: {currentState}");
+        StateChanged?.Invoke(currentState);
     }
 }

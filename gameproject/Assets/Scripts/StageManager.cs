@@ -22,12 +22,14 @@ public class StageManager : MonoBehaviour
     [SerializeField] private GameObject failPanel;
 
     private int targetStoneLevel = 3;
+    private int turnCount = 0;
 
     private bool isCleared = false;
     private bool isFailed = false;
     private Coroutine failCheckCoroutine;
 
     public int TargetStoneLevel => targetStoneLevel;
+    public int TurnCount => turnCount;
     public bool IsCleared => isCleared;
     public bool IsFailed => isFailed;
 
@@ -45,29 +47,33 @@ public class StageManager : MonoBehaviour
     private void Start()
     {
         SetupStage();
-
         UpdateTargetUI();
-
-        if (clearPanel != null)
-        {
-            clearPanel.SetActive(false);
-        }
-
-        if (failPanel != null)
-        {
-            failPanel.SetActive(false);
-        }
+        SetResultPanels(false, false);
     }
 
     private void SetupStage()
     {
         if (currentStageData == null)
         {
-            Debug.LogError("StageManager에 currentStageData가 연결되지 않았습니다.");
+            Debug.LogError("StageManager currentStageData is not assigned.");
             return;
         }
 
+        if (!currentStageData.ValidateStage(out string errorMessage))
+        {
+            Debug.LogError($"StageData setup error: {errorMessage}");
+            return;
+        }
+
+        ResetStageState();
+        ClearSpawnedObjects();
+
         targetStoneLevel = currentStageData.targetStoneLevel;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StartGame(currentStageData);
+        }
 
         SpawnStageStones();
         SpawnStageEnemies();
@@ -77,7 +83,7 @@ public class StageManager : MonoBehaviour
     {
         if (stonePrefab == null)
         {
-            Debug.LogError("StageManager에 stonePrefab이 연결되지 않았습니다.");
+            Debug.LogError("StageManager stonePrefab is not assigned.");
             return;
         }
 
@@ -98,11 +104,12 @@ public class StageManager : MonoBehaviour
 
             if (stone == null)
             {
-                Debug.LogError("stonePrefab에 Stone.cs가 없습니다.");
+                Debug.LogError("stonePrefab does not have a Stone component.");
                 continue;
             }
 
-            stone.Initialize(stoneData.level, stoneData.hp);
+            int stoneHp = stoneData.hp > 0 ? stoneData.hp : currentStageData.defaultStoneHp;
+            stone.Initialize(stoneData.level, stoneHp);
 
             Rigidbody2D rb = stoneObject.GetComponent<Rigidbody2D>();
 
@@ -123,7 +130,7 @@ public class StageManager : MonoBehaviour
 
             if (enemyData.enemyPrefab == null)
             {
-                Debug.LogWarning($"StageData의 {i}번째 enemyPrefab이 비어 있습니다.");
+                Debug.LogWarning($"StageData enemyPrefab at index {i} is empty.");
                 continue;
             }
 
@@ -141,7 +148,8 @@ public class StageManager : MonoBehaviour
 
             if (enemy != null)
             {
-                enemy.Initialize(enemyData.hp);
+                int enemyHp = enemyData.hp > 0 ? enemyData.hp : currentStageData.defaultEnemyHp;
+                enemy.Initialize(enemyHp);
             }
 
             Rigidbody2D rb = enemyObject.GetComponent<Rigidbody2D>();
@@ -181,6 +189,23 @@ public class StageManager : MonoBehaviour
         }
 
         failCheckCoroutine = StartCoroutine(CheckFailAfterDelay());
+    }
+
+    public void AddTurnCount()
+    {
+        if (isCleared || isFailed)
+        {
+            return;
+        }
+
+        turnCount++;
+
+        if (currentStageData != null &&
+            currentStageData.maxTurnCount > 0 &&
+            turnCount >= currentStageData.maxTurnCount)
+        {
+            RequestFailCheck();
+        }
     }
 
     private IEnumerator CheckFailAfterDelay()
@@ -249,13 +274,8 @@ public class StageManager : MonoBehaviour
     private void ClearStage()
     {
         isCleared = true;
-
-        Debug.Log("스테이지 클리어");
-
-        if (clearPanel != null)
-        {
-            clearPanel.SetActive(true);
-        }
+        Debug.Log("Stage cleared.");
+        SetResultPanels(true, false);
 
         if (GameManager.Instance != null)
         {
@@ -266,13 +286,8 @@ public class StageManager : MonoBehaviour
     private void FailStage()
     {
         isFailed = true;
-
-        Debug.Log("스테이지 실패");
-
-        if (failPanel != null)
-        {
-            failPanel.SetActive(true);
-        }
+        Debug.Log("Stage failed.");
+        SetResultPanels(false, true);
 
         if (GameManager.Instance != null)
         {
@@ -284,7 +299,50 @@ public class StageManager : MonoBehaviour
     {
         if (targetText != null)
         {
-            targetText.text = $"목표: {targetStoneLevel}돌 만들기";
+            string targetDescription = currentStageData != null
+                ? currentStageData.TargetDescription
+                : $"Create a level {targetStoneLevel} stone";
+
+            targetText.text = $"Goal: {targetDescription}";
+        }
+    }
+
+    private void ResetStageState()
+    {
+        isCleared = false;
+        isFailed = false;
+        turnCount = 0;
+    }
+
+    private void SetResultPanels(bool showClear, bool showFail)
+    {
+        if (clearPanel != null)
+        {
+            clearPanel.SetActive(showClear);
+        }
+
+        if (failPanel != null)
+        {
+            failPanel.SetActive(showFail);
+        }
+    }
+
+    private void ClearSpawnedObjects()
+    {
+        ClearChildren(stoneParent);
+        ClearChildren(enemyParent);
+    }
+
+    private void ClearChildren(Transform parent)
+    {
+        if (parent == null)
+        {
+            return;
+        }
+
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            Destroy(parent.GetChild(i).gameObject);
         }
     }
 }
