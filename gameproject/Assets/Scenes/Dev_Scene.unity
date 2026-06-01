@@ -1093,6 +1093,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b2c22c02ce74a47910e629b6b0be54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  currentState: 0
+  currentStageName: 
 --- !u!4 &880161822
 Transform:
   m_ObjectHideFlags: 0
