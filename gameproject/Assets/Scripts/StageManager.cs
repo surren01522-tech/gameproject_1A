@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,12 +15,19 @@ public class StageManager : MonoBehaviour
     [Header("Spawn Parent")]
     [SerializeField] private Transform stoneParent;
     [SerializeField] private Transform enemyParent;
+    [SerializeField] private Transform wallParent;
 
     [Header("UI")]
     [SerializeField] private Text targetText;
     [SerializeField] private Text stageNameText;
     [SerializeField] private GameObject clearPanel;
     [SerializeField] private GameObject failPanel;
+
+    [Header("Physics Feel")]
+    [SerializeField] private float stoneLinearDamping = 1.25f;
+    [SerializeField] private float stoneAngularDamping = 1.0f;
+    [SerializeField] private float enemyLinearDamping = 1.6f;
+    [SerializeField] private float enemyAngularDamping = 1.2f;
 
     private int targetStoneLevel = 3;
 
@@ -48,7 +55,6 @@ public class StageManager : MonoBehaviour
     private void Start()
     {
         SetupStage();
-
         UpdateStageUI();
 
         if (clearPanel != null)
@@ -74,21 +80,38 @@ public class StageManager : MonoBehaviour
     {
         if (currentStageData == null)
         {
-            Debug.LogError("StageManager¿¡ currentStageData°¡ ¾ø½À´Ï´Ù. ½ºÅ×ÀÌÁö ¼±ÅÃ ¶Ç´Â ÀÎ½ºÆåÅÍ ¿¬°áÀ» È®ÀÎÇÏ¼¼¿ä.");
+            Debug.LogError("StageManagerì— currentStageDataê°€ ì—†ìŠµë‹ˆë‹¤. ìŠ¤í…Œì´ì§€ ì„ íƒ ë˜ëŠ” ì¸ìŠ¤í™í„° ì—°ê²°ì„ í™•ì¸í•˜ì„¸ìš”.");
             return;
         }
 
         targetStoneLevel = currentStageData.targetStoneLevel;
 
+        SpawnStageWalls();
         SpawnStageStones();
         SpawnStageEnemies();
+    }
+
+    private void SpawnStageWalls()
+    {
+        for (int i = 0; i < currentStageData.stageWalls.Count; i++)
+        {
+            StageWallData wallData = currentStageData.stageWalls[i];
+            GameObject wallObject = new GameObject($"StageWall_{i + 1}");
+            wallObject.tag = "Wall";
+            wallObject.transform.SetParent(wallParent != null ? wallParent : transform, false);
+            wallObject.transform.position = wallData.position;
+            wallObject.transform.localScale = new Vector3(wallData.size.x, wallData.size.y, 1f);
+
+            BoxCollider2D collider = wallObject.AddComponent<BoxCollider2D>();
+            collider.size = Vector2.one;
+        }
     }
 
     private void SpawnStageStones()
     {
         if (stonePrefab == null)
         {
-            Debug.LogError("StageManager¿¡ stonePrefabÀÌ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogError("StageManagerì— stonePrefabì´ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -109,20 +132,12 @@ public class StageManager : MonoBehaviour
 
             if (stone == null)
             {
-                Debug.LogError("stonePrefab¿¡ Stone.cs°¡ ¾ø½À´Ï´Ù.");
+                Debug.LogError("stonePrefabì— Stone.csê°€ ì—†ìŠµë‹ˆë‹¤.");
                 continue;
             }
 
             stone.Initialize(stoneData.level, stoneData.hp);
-
-            Rigidbody2D rb = stoneObject.GetComponent<Rigidbody2D>();
-
-            if (rb != null)
-            {
-                rb.gravityScale = 0f;
-                rb.linearVelocity = Vector2.zero;
-                rb.angularVelocity = 0f;
-            }
+            ConfigureTopDownBody(stoneObject.GetComponent<Rigidbody2D>(), stoneLinearDamping, stoneAngularDamping);
         }
     }
 
@@ -134,7 +149,7 @@ public class StageManager : MonoBehaviour
 
             if (enemyData.enemyPrefab == null)
             {
-                Debug.LogWarning($"StageDataÀÇ {i}¹øÂ° enemyPrefabÀÌ ºñ¾î ÀÖ½À´Ï´Ù.");
+                Debug.LogWarning($"StageDataì˜ {i}ë²ˆì§¸ enemyPrefabì´ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤.");
                 continue;
             }
 
@@ -155,15 +170,23 @@ public class StageManager : MonoBehaviour
                 enemy.Initialize(enemyData.hp);
             }
 
-            Rigidbody2D rb = enemyObject.GetComponent<Rigidbody2D>();
-
-            if (rb != null)
-            {
-                rb.gravityScale = 0f;
-                rb.linearVelocity = Vector2.zero;
-                rb.angularVelocity = 0f;
-            }
+            ConfigureTopDownBody(enemyObject.GetComponent<Rigidbody2D>(), enemyLinearDamping, enemyAngularDamping);
         }
+    }
+
+    private void ConfigureTopDownBody(Rigidbody2D rb, float linearDamping, float angularDamping)
+    {
+        if (rb == null)
+        {
+            return;
+        }
+
+        rb.gravityScale = 0f;
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.linearDamping = linearDamping;
+        rb.angularDamping = angularDamping;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
     public void CheckClear(int createdStoneLevel)
@@ -261,7 +284,7 @@ public class StageManager : MonoBehaviour
     {
         isCleared = true;
 
-        Debug.Log("½ºÅ×ÀÌÁö Å¬¸®¾î");
+        Debug.Log("ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´");
 
         if (clearPanel != null)
         {
@@ -278,7 +301,7 @@ public class StageManager : MonoBehaviour
     {
         isFailed = true;
 
-        Debug.Log("½ºÅ×ÀÌÁö ½ÇÆĞ");
+        Debug.Log("ìŠ¤í…Œì´ì§€ ì‹¤íŒ¨");
 
         if (failPanel != null)
         {
@@ -295,7 +318,7 @@ public class StageManager : MonoBehaviour
     {
         if (targetText != null)
         {
-            targetText.text = $"¸ñÇ¥: {targetStoneLevel}µ¹ ¸¸µé±â";
+            targetText.text = $"ëª©í‘œ: {targetStoneLevel}ëŒ ë§Œë“¤ê¸°";
         }
 
         if (stageNameText != null && currentStageData != null)
@@ -303,4 +326,5 @@ public class StageManager : MonoBehaviour
             stageNameText.text = currentStageData.stageName;
         }
     }
+
 }

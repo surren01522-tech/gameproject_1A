@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f36f6d72bd20841b3488bfaf35ad83, type: 3}
+  m_Name: PlayableStage_01
+  m_EditorClassIdentifier: Assembly-CSharp::StageData
+  stageName: Playable Stage 1
+  targetStoneLevel: 3
+  initialStones:
+  - level: 1
+    hp: 50
+    position: {x: -4.2, y: -1.2}
+  - level: 1
+    hp: 50
+    position: {x: -1.7, y: 1.7}
+  - level: 1
+    hp: 50
+    position: {x: 1.3, y: 1.15}
+  - level: 1
+    hp: 50
+    position: {x: 3.8, y: -1.3}
+  initialEnemies:
+  - enemyPrefab: {fileID: 3551049063937320561, guid: a45d22e0267208641a0509d13ef132a8, type: 3}
+    hp: 3
+    position: {x: 0.1, y: 0}
+  stageWalls:
+  - position: {x: 0, y: 4.45}
+    size: {x: 13.8, y: 0.28}
+  - position: {x: 0, y: -4.45}
+    size: {x: 13.8, y: 0.28}
+  - position: {x: -6.85, y: 0}
+    size: {x: 0.28, y: 8.9}
+  - position: {x: 6.85, y: 0}
+    size: {x: 0.28, y: 8.9}

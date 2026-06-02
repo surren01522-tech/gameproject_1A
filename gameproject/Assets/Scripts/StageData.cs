@@ -15,6 +15,9 @@ public class StageData : ScriptableObject
 
     [Header("Initial Enemies")]
     public List<StageEnemyData> initialEnemies = new List<StageEnemyData>();
+
+    [Header("Stage Walls")]
+    public List<StageWallData> stageWalls = new List<StageWallData>();
 }
 
 [System.Serializable]
@@ -31,4 +34,11 @@ public class StageEnemyData
     public GameObject enemyPrefab;
     public int hp = 1;
     public Vector2 position;
+}
+
+[System.Serializable]
+public class StageWallData
+{
+    public Vector2 position;
+    public Vector2 size = Vector2.one;
 }
