@@ -12,31 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f36f6d72bd20841b3488bfaf35ad83, type: 3}
   m_Name: StageData 2
   m_EditorClassIdentifier: Assembly-CSharp::StageData
-  stageName: Stage 1
-  targetStoneLevel: 3
+  stageName: Stage 1-2
+  targetStoneLevel: 2
   initialStones:
   - level: 1
-    hp: 50
-    position: {x: 3, y: 1}
+    hp: 9999
+    position: {x: 5, y: 2}
   - level: 1
-    hp: 50
-    position: {x: 1, y: 3}
-  - level: 1
-    hp: 50
-    position: {x: -2, y: -2}
-  - level: 1
-    hp: 50
-    position: {x: -2.5, y: -1}
-  initialEnemies:
-  - enemyPrefab: {fileID: 3551049063937320561, guid: a45d22e0267208641a0509d13ef132a8, type: 3}
-    hp: 3
-    position: {x: 1, y: 0}
-  - enemyPrefab: {fileID: 3551049063937320561, guid: 2aa9503944f19954a921a58eca2b34ed, type: 3}
-    hp: 3
-    position: {x: 0, y: 1}
-  - enemyPrefab: {fileID: 3551049063937320561, guid: d4ed610359832b9438ea8eda4321d849, type: 3}
-    hp: 3
-    position: {x: -1, y: 0}
-  - enemyPrefab: {fileID: 3551049063937320561, guid: 29e68bb48494b444aaf01d2a18deb577, type: 3}
-    hp: 3
-    position: {x: 0, y: -1}
+    hp: 9999
+    position: {x: 1, y: -3}
+  initialEnemies: []

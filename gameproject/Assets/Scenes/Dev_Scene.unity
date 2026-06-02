@@ -1060,11 +1060,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bad2c2489122e547a7a03c8235b197c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageManager
-  currentStageData: {fileID: 11400000, guid: 11accd7924b9b52448951e81f3be54dd, type: 2}
+  currentStageData: {fileID: 11400000, guid: 337bb67ca7af21843a6d7679dfb13fb1, type: 2}
   stonePrefab: {fileID: 5745858000737742955, guid: eea94761121dc594d89e771e74643681, type: 3}
   stoneParent: {fileID: 0}
   enemyParent: {fileID: 0}
   targetText: {fileID: 0}
+  stageNameText: {fileID: 0}
   clearPanel: {fileID: 0}
   failPanel: {fileID: 0}
 --- !u!114 &880161820

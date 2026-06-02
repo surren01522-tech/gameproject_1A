@@ -10,24 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0f36f6d72bd20841b3488bfaf35ad83, type: 3}
-  m_Name: StageData 6
+  m_Name: StageData 13
   m_EditorClassIdentifier: Assembly-CSharp::StageData
-  stageName: Stage 2-3
-  targetStoneLevel: 3
+  stageName: Stage 5-1
+  targetStoneLevel: 5
   initialStones:
   - level: 1
     hp: 9999
-    position: {x: -4, y: 2}
+    position: {x: 5, y: 3}
   - level: 1
     hp: 9999
-    position: {x: 4, y: 2}
+    position: {x: -5, y: 3}
   - level: 2
     hp: 9999
-    position: {x: -4, y: -2}
+    position: {x: 5, y: 0}
+  - level: 2
+    hp: 9999
+    position: {x: -5, y: 0}
+  - level: 3
+    hp: 9999
+    position: {x: 5, y: -3}
+  - level: 3
+    hp: 9999
+    position: {x: -5, y: -3}
+  - level: 3
+    hp: 9999
+    position: {x: -1, y: 0}
   initialEnemies:
   - enemyPrefab: {fileID: 3551049063937320561, guid: a45d22e0267208641a0509d13ef132a8, type: 3}
     hp: 3
-    position: {x: 1, y: 0}
+    position: {x: 0, y: 1}
   - enemyPrefab: {fileID: 3551049063937320561, guid: 2aa9503944f19954a921a58eca2b34ed, type: 3}
     hp: 3
-    position: {x: -1, y: 0}
+    position: {x: 0, y: -1}
