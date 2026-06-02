@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerSlingshotController : MonoBehaviour
@@ -73,16 +74,25 @@ public class PlayerSlingshotController : MonoBehaviour
             return;
         }
 
+        // 마우스를 처음 누른 순간
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
+            // UI 위에서 누른 경우 슬링샷 입력 시작 안 함
+            if (IsPointerOverUI())
+            {
+                return;
+            }
+
             StartDrag();
         }
 
+        // 드래그 중
         if (Mouse.current.leftButton.isPressed && isDragging)
         {
             UpdateDrag();
         }
 
+        // 마우스를 뗀 순간
         if (Mouse.current.leftButton.wasReleasedThisFrame && isDragging)
         {
             Release();
@@ -91,6 +101,12 @@ public class PlayerSlingshotController : MonoBehaviour
 
     private void StartDrag()
     {
+        // 한 번 더 안전 체크
+        if (IsPointerOverUI())
+        {
+            return;
+        }
+
         dragStartWorldPos = GetMouseWorldPosition();
         dragCurrentWorldPos = dragStartWorldPos;
 
@@ -276,5 +292,15 @@ public class PlayerSlingshotController : MonoBehaviour
         Vector3 worldPos = mainCamera.ScreenToWorldPoint(mouseScreenPos);
 
         return new Vector2(worldPos.x, worldPos.y);
+    }
+
+    private bool IsPointerOverUI()
+    {
+        if (EventSystem.current == null)
+        {
+            return false;
+        }
+
+        return EventSystem.current.IsPointerOverGameObject();
     }
 }
