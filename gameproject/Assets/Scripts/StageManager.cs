@@ -303,4 +303,14 @@ public class StageManager : MonoBehaviour
             stageNameText.text = currentStageData.stageName;
         }
     }
+
+    public void ForceFail()
+    {
+        if (isCleared || isFailed)
+        {
+            return;
+        }
+
+        FailStage();
+    }
 }

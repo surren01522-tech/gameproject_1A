@@ -4,7 +4,6 @@ public class Stone : MonoBehaviour
 {
     [Header("Stone Data")]
     public int level = 1;
-    public int hp = 3;
 
     [Header("State")]
     public bool isMerging = false;
@@ -20,8 +19,9 @@ public class Stone : MonoBehaviour
 
     public void Initialize(int stoneLevel, int stoneHp)
     {
+        // stoneHp는 StageData 호환용으로 받아두지만,
+        // 이제 돌은 데미지를 받지 않으므로 사용하지 않음
         level = stoneLevel;
-        hp = stoneHp;
         isMerging = false;
 
         UpdateSprite();
@@ -57,15 +57,35 @@ public class Stone : MonoBehaviour
             return;
         }
 
+        // 돌은 이제 벽에 부딪혀도 데미지를 받지 않음
         if (collision.gameObject.CompareTag("Wall"))
         {
-            TakeDamage(1);
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySfx(SfxType.HitWall);
+            }
+
+            if (EffectManager.Instance != null && collision.contactCount > 0)
+            {
+                Vector3 hitPosition = collision.GetContact(0).point;
+                EffectManager.Instance.PlayEffect(EffectType.HitWall, hitPosition);
+            }
+
             return;
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(1);
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySfx(SfxType.HitEnemy);
+            }
+
+            if (EffectManager.Instance != null && collision.contactCount > 0)
+            {
+                Vector3 hitPosition = collision.GetContact(0).point;
+                EffectManager.Instance.PlayEffect(EffectType.HitEnemy, hitPosition);
+            }
 
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
@@ -77,6 +97,7 @@ public class Stone : MonoBehaviour
             return;
         }
 
+        // 같은 레벨 돌끼리만 합성
         if (collision.gameObject.CompareTag("Stone"))
         {
             Stone otherStone = collision.gameObject.GetComponent<Stone>();
@@ -95,33 +116,6 @@ public class Stone : MonoBehaviour
             {
                 MergeManager.Instance.TryMerge(this, otherStone);
             }
-        }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        if (isMerging)
-        {
-            return;
-        }
-
-        hp -= damage;
-
-        Debug.Log($"{gameObject.name} 내구도 감소: {hp}");
-
-        if (hp <= 0)
-        {
-            DestroyStone();
-        }
-    }
-
-    private void DestroyStone()
-    {
-        Destroy(gameObject);
-
-        if (StageManager.Instance != null)
-        {
-            StageManager.Instance.RequestFailCheck();
         }
     }
 }

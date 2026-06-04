@@ -22,7 +22,7 @@ public class EnemyHpPanel : MonoBehaviour
 
     private readonly List<EnemyHpItem> enemyHpItems = new List<EnemyHpItem>();
 
-    private bool isOpen = true;
+    private bool isOpen = false;
     private float targetPanelX;
 
     private Coroutine refreshCoroutine;

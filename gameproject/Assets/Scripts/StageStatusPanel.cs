@@ -27,7 +27,7 @@ public class StageStatusPanel : MonoBehaviour
     [Header("Refresh")]
     [SerializeField] private float refreshInterval = 0.2f;
 
-    private bool isOpen = true;
+    private bool isOpen = false;
     private float targetPanelX;
 
     private float refreshTimer = 0f;

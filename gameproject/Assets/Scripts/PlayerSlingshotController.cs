@@ -303,4 +303,61 @@ public class PlayerSlingshotController : MonoBehaviour
 
         return EventSystem.current.IsPointerOverGameObject();
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isMoving)
+        {
+            return;
+        }
+
+        PlayerHeart playerHeart = GetComponent<PlayerHeart>();
+
+        if (playerHeart == null)
+        {
+            return;
+        }
+
+        if (collision.gameObject.CompareTag("Stone"))
+        {
+            playerHeart.TakeDamage(1);
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySfx(SfxType.StoneBreak);
+            }
+
+            if (EffectManager.Instance != null)
+            {
+                Vector3 hitPosition = collision.GetContact(0).point;
+                EffectManager.Instance.PlayEffect(EffectType.StoneBreak, hitPosition);
+            }
+
+            return;
+        }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {            
+
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+
+            if (enemy != null)
+            {
+                enemy.TakeDamage(1);
+            }
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySfx(SfxType.HitEnemy);
+            }
+
+            if (EffectManager.Instance != null && collision.contactCount > 0)
+            {
+                Vector3 hitPosition = collision.GetContact(0).point;
+                EffectManager.Instance.PlayEffect(EffectType.HitEnemy, hitPosition);
+            }
+
+            return;
+        }
+    }
 }
