@@ -32,7 +32,7 @@ public class StageStoneData
 public class StageEnemyData
 {
     public GameObject enemyPrefab;
-    public int hp = 1;
+    public int hp = 3;
     public Vector2 position;
 }
 

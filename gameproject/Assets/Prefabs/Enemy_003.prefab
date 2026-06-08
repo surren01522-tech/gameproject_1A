@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d71b2932cced374ab48903452ad7eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  hp: 15
+  hp: 3
 --- !u!1 &7499260879774618272
 GameObject:
   m_ObjectHideFlags: 0

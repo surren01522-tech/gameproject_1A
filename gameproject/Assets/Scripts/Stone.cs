@@ -6,12 +6,25 @@ public class Stone : MonoBehaviour
     public int level = 1;
     public int hp = 3;
 
+    [Header("Collision Damage")]
+    [SerializeField] private int wallCollisionDamage = 1;
+
     [Header("State")]
     public bool isMerging = false;
 
     [Header("Sprite")]
     public SpriteRenderer StoneSprite;
     public Sprite[] StoneType;
+
+    private int maxHp = 3;
+
+    public int CurrentHp => hp;
+    public int MaxHp => maxHp;
+
+    private void Awake()
+    {
+        maxHp = Mathf.Max(1, hp);
+    }
 
     private void Start()
     {
@@ -22,6 +35,7 @@ public class Stone : MonoBehaviour
     {
         level = stoneLevel;
         hp = stoneHp;
+        maxHp = Mathf.Max(1, stoneHp);
         isMerging = false;
 
         UpdateSprite();
@@ -43,7 +57,7 @@ public class Stone : MonoBehaviour
 
         if (spriteIndex < 0 || spriteIndex >= StoneType.Length)
         {
-            Debug.LogWarning($"StoneType 배열에 level {level}에 해당하는 스프라이트가 없습니다.");
+            Debug.LogWarning($"StoneType sprite is missing for level {level}.");
             return;
         }
 
@@ -59,21 +73,7 @@ public class Stone : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Wall"))
         {
-            TakeDamage(1);
-            return;
-        }
-
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            TakeDamage(1);
-
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-
-            if (enemy != null)
-            {
-                enemy.TakeDamage(1);
-            }
-
+            TakeDamage(wallCollisionDamage);
             return;
         }
 
@@ -100,14 +100,14 @@ public class Stone : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (isMerging)
+        if (isMerging || damage <= 0)
         {
             return;
         }
 
         hp -= damage;
 
-        Debug.Log($"{gameObject.name} 내구도 감소: {hp}");
+        Debug.Log($"{gameObject.name} stone hp: {hp}");
 
         if (hp <= 0)
         {

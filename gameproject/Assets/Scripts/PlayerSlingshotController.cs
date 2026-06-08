@@ -26,6 +26,7 @@ public class PlayerSlingshotController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Camera mainCamera;
+    private PlayerHealth playerHealth;
 
     private Vector2 dragStartWorldPos;
     private Vector2 dragCurrentWorldPos;
@@ -36,8 +37,13 @@ public class PlayerSlingshotController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
+        playerHealth = GetComponent<PlayerHealth>();
 
-        // 2D 슬링샷 게임이므로 중력은 사용하지 않음
+        if (playerHealth == null)
+        {
+            playerHealth = gameObject.AddComponent<PlayerHealth>();
+        }
+
         rb.gravityScale = 0f;
 
         HideArrow();
@@ -55,19 +61,21 @@ public class PlayerSlingshotController : MonoBehaviour
 
     private void HandleInput()
     {
-        // 게임이 클리어/실패 상태라면 입력 막기
+        if (playerHealth != null && playerHealth.IsDead)
+        {
+            return;
+        }
+
         if (GameManager.Instance != null && !GameManager.Instance.IsPlaying())
         {
             return;
         }
 
-        // TurnManager가 있으면, 플레이어가 쏠 수 있는 턴인지 확인
         if (TurnManager.Instance != null && !TurnManager.Instance.CanPlayerShoot())
         {
             return;
         }
 
-        // 혹시 TurnManager가 없어도 이동 중에는 재발사 방지
         if (isMoving)
         {
             return;
@@ -93,16 +101,13 @@ public class PlayerSlingshotController : MonoBehaviour
     {
         dragStartWorldPos = GetMouseWorldPosition();
         dragCurrentWorldPos = dragStartWorldPos;
-
         isDragging = true;
-
         ShowArrow();
     }
 
     private void UpdateDrag()
     {
         dragCurrentWorldPos = GetMouseWorldPosition();
-
         UpdateArrow();
     }
 
@@ -110,7 +115,6 @@ public class PlayerSlingshotController : MonoBehaviour
     {
         Vector2 dragVector = GetClampedDragVector();
 
-        // 거의 안 당겼으면 발사하지 않음
         if (dragVector.sqrMagnitude <= 0.001f)
         {
             isDragging = false;
@@ -118,11 +122,8 @@ public class PlayerSlingshotController : MonoBehaviour
             return;
         }
 
-        // 발사 직전 기존 속도 초기화
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
-
-        // 슬링샷 발사
         rb.AddForce(dragVector * powerMultiplier, ForceMode2D.Impulse);
 
         isDragging = false;
@@ -130,13 +131,11 @@ public class PlayerSlingshotController : MonoBehaviour
 
         HideArrow();
 
-        // 턴 매니저에게 이동 시작 알림
         if (TurnManager.Instance != null)
         {
             TurnManager.Instance.StartPlayerMove();
         }
 
-        // 기존 감속 코루틴이 있으면 정리
         if (stopCoroutine != null)
         {
             StopCoroutine(stopCoroutine);
@@ -152,25 +151,12 @@ public class PlayerSlingshotController : MonoBehaviour
         while (timer < maxMoveTime)
         {
             timer += Time.deltaTime;
-
             float t = timer / maxMoveTime;
-
-            // 처음에는 약하게, 시간이 지날수록 강하게 감속
             float currentSlowPower = Mathf.Lerp(0.2f, stopSmoothPower, t);
 
-            rb.linearVelocity = Vector2.Lerp(
-                rb.linearVelocity,
-                Vector2.zero,
-                Time.deltaTime * currentSlowPower
-            );
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.deltaTime * currentSlowPower);
+            rb.angularVelocity = Mathf.Lerp(rb.angularVelocity, 0f, Time.deltaTime * currentSlowPower);
 
-            rb.angularVelocity = Mathf.Lerp(
-                rb.angularVelocity,
-                0f,
-                Time.deltaTime * currentSlowPower
-            );
-
-            // 충분히 느려졌으면 3초를 다 기다리지 않고 종료
             if (rb.linearVelocity.magnitude <= stopVelocityThreshold)
             {
                 break;
@@ -179,27 +165,23 @@ public class PlayerSlingshotController : MonoBehaviour
             yield return null;
         }
 
-        // 마지막에는 완전히 정지
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
-
         isMoving = false;
         stopCoroutine = null;
 
-        // 턴 매니저에게 이동 종료 알림
         if (TurnManager.Instance != null)
         {
             TurnManager.Instance.EndPlayerMove();
         }
         else
         {
-            Debug.Log("멈춤 완료! 다음 턴 시작 가능");
+            Debug.Log("Move stopped. Ready for next shot.");
         }
     }
 
     private Vector2 GetClampedDragVector()
     {
-        // 마우스를 뒤로 당긴 만큼 반대 방향으로 발사
         Vector2 dragVector = dragStartWorldPos - dragCurrentWorldPos;
 
         if (dragVector.magnitude > maxDragDistance)
@@ -224,7 +206,6 @@ public class PlayerSlingshotController : MonoBehaviour
 
         Vector3 startPos = transform.position;
         Vector3 direction = dragVector.normalized;
-
         float arrowLength = dragVector.magnitude * arrowLengthMultiplier;
         Vector3 endPos = startPos + direction * arrowLength;
 
@@ -238,7 +219,6 @@ public class PlayerSlingshotController : MonoBehaviour
         if (arrowHead != null)
         {
             arrowHead.position = endPos - direction * arrowHeadDistance;
-
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             arrowHead.rotation = Quaternion.Euler(0f, 0f, angle);
         }
@@ -274,7 +254,6 @@ public class PlayerSlingshotController : MonoBehaviour
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Vector3 worldPos = mainCamera.ScreenToWorldPoint(mouseScreenPos);
-
         return new Vector2(worldPos.x, worldPos.y);
     }
 }
