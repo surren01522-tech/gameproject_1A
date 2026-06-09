@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 3b9a4b32092acf54fb62e31bd5b196a4
+guid: a1799a50619c27d4aa8324a4c117e6b8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9195640480235963428
-    second: 04_monster_4_0
+      213: 7508290385190532532
+    second: 04_Up_0
   - first:
-      213: -7242182231097938146
-    second: 04_monster_4_1
+      213: 443272118191620536
+    second: 04_Up_1
   - first:
-      213: 579926842656696907
-    second: 04_monster_4_2
+      213: 8667017637547018243
+    second: 04_Up_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 04_monster_4_0
+      name: 04_Up_0
       rect:
         serializedVersion: 2
         x: 8
         y: 0
         width: 69
-        height: 144
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,18 +121,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 424caa2db4a7d9f70800000000000000
-      internalID: 9195640480235963428
+      spriteID: 4b533cf135ec23860800000000000000
+      internalID: 7508290385190532532
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 04_monster_4_1
+      name: 04_Up_1
       rect:
         serializedVersion: 2
         x: 47
-        y: 116
+        y: 133
         width: 18
         height: 31
       alignment: 0
@@ -143,18 +143,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e1fe2cca1a99e7b90800000000000000
-      internalID: -7242182231097938146
+      spriteID: 8b185a794a1d62600800000000000000
+      internalID: 443272118191620536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 04_monster_4_2
+      name: 04_Up_2
       rect:
         serializedVersion: 2
         x: 0
-        y: 34
+        y: 51
         width: 19
         height: 67
       alignment: 0
@@ -165,8 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b4a244c04605c0800800000000000000
-      internalID: 579926842656696907
+      spriteID: 308090c1f9e674870800000000000000
+      internalID: 8667017637547018243
       vertices: []
       indices: 
       edges: []
@@ -185,9 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      04_monster_4_0: 9195640480235963428
-      04_monster_4_1: -7242182231097938146
-      04_monster_4_2: 579926842656696907
+      04_Up_0: 7508290385190532532
+      04_Up_1: 443272118191620536
+      04_Up_2: 8667017637547018243
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
