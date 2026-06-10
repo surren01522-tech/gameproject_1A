@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
 
     private void OnBGMToggleChange(bool isOn)
     {
-        SoundManager_1.Instance.OnOffBGM(isOn);
+        SoundManager_1.Instance.SetBgmOn(isOn);
         SoundManager_1.Instance.PlaySfx(SfxType.ButtonClick);
     }
 

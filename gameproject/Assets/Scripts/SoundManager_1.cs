@@ -14,6 +14,7 @@ public class SoundManager_1 : MonoBehaviour
     private AudioSource[] sfxAudioSources;
     private int currentSfxIndex = 0;
     private bool isSfxOn = true;
+    private bool isBgmOn = true;
 
     [Header("BGM Clip (Long Audio)")]
     [SerializeField] private AudioClip mainBgmClip;
@@ -223,13 +224,29 @@ public class SoundManager_1 : MonoBehaviour
 
     public void PlayMainBgm()
     {
+        if (bgmAudioSource == null)
+        {
+            Debug.LogWarning("[SoundManager] BGM AudioSource가 없습니다.");
+            return;
+        }
+
         if (mainBgmClip == null)
         {
             Debug.LogWarning("[SoundManager] Main BGM Clip이 연결되지 않았습니다.");
             return;
         }
 
-        PlayBgm(mainBgmClip);
+        if (bgmAudioSource.isPlaying && bgmAudioSource.clip == mainBgmClip)
+        {
+            return;
+        }
+
+        bgmAudioSource.clip = mainBgmClip;
+        bgmAudioSource.volume = bgmVolume;
+        bgmAudioSource.loop = true;
+        bgmAudioSource.Play();
+
+        Debug.Log("[SoundManager] Main BGM 재생 시작");
     }
 
     public void StopBgm()
@@ -283,16 +300,38 @@ public class SoundManager_1 : MonoBehaviour
         return source;
     }
 
-    public void OnOffBGM(bool isOn)
+    public void OnBgmToggleChanged(bool isOn)
     {
-        isSfxOn = isOn;
+        SetBgmOn(isOn);
+    }
 
-        if (!isSfxOn)
+    public void SetBgmOn(bool isOn)
+    {
+        isBgmOn = isOn;
+
+        if (bgmAudioSource == null)
         {
-            StopBgm();
+            Debug.LogWarning("[SoundManager] BGM AudioSource가 없습니다.");
+            return;
         }
 
-        Debug.Log($"[SoundManager] BGM 상태 변경: {isSfxOn}");
+        if (isBgmOn)
+        {
+            bgmAudioSource.mute = false;
+
+            if (!bgmAudioSource.isPlaying)
+            {
+                PlayMainBgm();
+            }
+
+            Debug.Log("[SoundManager] BGM 켜짐");
+        }
+        else
+        {
+            bgmAudioSource.Stop();
+
+            Debug.Log("[SoundManager] BGM 꺼짐");
+        }
     }
 
     public void SetSfxOn(bool isOn)
