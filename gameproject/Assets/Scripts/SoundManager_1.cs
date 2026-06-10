@@ -6,11 +6,14 @@ public class SoundManager_1 : MonoBehaviour
 
     [Header("Audio Source")]
     [SerializeField] private AudioSource bgmAudioSource;
+    AudioSource audioSourceFx;
+    AudioSource audioSourceBGM;
 
     [Header("SFX Pool")]
     [SerializeField] private int sfxSourceCount = 10;
     private AudioSource[] sfxAudioSources;
     private int currentSfxIndex = 0;
+    private bool isSfxOn = true;
 
     [Header("BGM Clip (Long Audio)")]
     [SerializeField] private AudioClip mainBgmClip;
@@ -157,6 +160,11 @@ public class SoundManager_1 : MonoBehaviour
 
     public void PlaySfx(SfxType type)
     {
+        if (!isSfxOn)
+        {
+            return;
+        }
+
         AudioClip clip = GetClip(type);
 
         if (clip == null)
@@ -273,6 +281,51 @@ public class SoundManager_1 : MonoBehaviour
         }
 
         return source;
+    }
+
+    public void OnOffBGM(bool isOn)
+    {
+        isSfxOn = isOn;
+
+        if (!isSfxOn)
+        {
+            StopBgm();
+        }
+
+        Debug.Log($"[SoundManager] BGM 상태 변경: {isSfxOn}");
+    }
+
+    public void SetSfxOn(bool isOn)
+    {
+        isSfxOn = isOn;
+
+        if (!isSfxOn)
+        {
+            StopAllSfx();
+        }
+
+        Debug.Log($"[SoundManager] SFX 상태 변경: {isSfxOn}");
+    }
+
+    public void OnSfxToggleChanged(bool isOn)
+    {
+        SetSfxOn(isOn);
+    }
+
+    public void StopAllSfx()
+    {
+        if (sfxAudioSources == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < sfxAudioSources.Length; i++)
+        {
+            if (sfxAudioSources[i] != null)
+            {
+                sfxAudioSources[i].Stop();
+            }
+        }
     }
 
     private float GetIndividualVolume(SfxType type)
