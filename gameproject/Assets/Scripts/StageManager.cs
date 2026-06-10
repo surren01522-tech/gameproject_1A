@@ -259,6 +259,8 @@ public class StageManager : MonoBehaviour
 
     private void ClearStage()
     {
+        SoundManager_1.Instance.PlaySfx(SfxType.Clear);
+
         isCleared = true;
 
         Debug.Log("스테이지 클리어");
@@ -276,6 +278,9 @@ public class StageManager : MonoBehaviour
 
     private void FailStage()
     {
+        SoundManager_1.Instance.PlaySfx(SfxType.Fail);
+
+
         isFailed = true;
 
         Debug.Log("스테이지 실패");

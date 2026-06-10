@@ -61,6 +61,7 @@ public class TurnManager : MonoBehaviour
 
     private void StartNextTurn()
     {
+        SoundManager_1.Instance.PlaySfx(SfxType.TurnStart);
         currentTurnState = TurnState.PlayerReady;
 
         Debug.Log("다음 턴 시작! 다시 발사 가능");

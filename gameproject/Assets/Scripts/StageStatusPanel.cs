@@ -79,6 +79,10 @@ public class StageStatusPanel : MonoBehaviour
 
     private void TogglePanel()
     {
+        SoundManager_1.Instance.PlaySfx(SfxType.ButtonClick);
+        SoundManager_1.Instance.PlaySfx(SfxType.PanelOpen);
+        SoundManager_1.Instance.PlaySfx(SfxType.PanelClose);
+
         isOpen = !isOpen;
 
         if (isOpen)

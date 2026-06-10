@@ -89,12 +89,14 @@ public class PlayerSlingshotController : MonoBehaviour
         // 드래그 중
         if (Mouse.current.leftButton.isPressed && isDragging)
         {
+            SoundManager_1.Instance.PlaySfx(SfxType.DragStart);
             UpdateDrag();
         }
 
         // 마우스를 뗀 순간
         if (Mouse.current.leftButton.wasReleasedThisFrame && isDragging)
         {
+            SoundManager_1.Instance.PlaySfx(SfxType.Shoot);
             Release();
         }
     }

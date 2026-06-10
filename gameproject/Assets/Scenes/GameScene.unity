@@ -1160,7 +1160,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1975170861}
@@ -2054,7 +2054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bad2c2489122e547a7a03c8235b197c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageManager
-  currentStageData: {fileID: 11400000, guid: 11accd7924b9b52448951e81f3be54dd, type: 2}
+  currentStageData: {fileID: 11400000, guid: 337bb67ca7af21843a6d7679dfb13fb1, type: 2}
   stonePrefab: {fileID: 5745858000737742955, guid: eea94761121dc594d89e771e74643681, type: 3}
   stoneParent: {fileID: 0}
   enemyParent: {fileID: 0}
@@ -2237,6 +2237,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980902428}
   m_CullTransparentMesh: 1
+--- !u!1 &995852501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 995852503}
+  - component: {fileID: 995852502}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &995852502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995852501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92949f40f97473f40b562ee616e22daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager_1
+  bgmAudioSource: {fileID: 0}
+  sfxSourceCount: 10
+  mainBgmClip: {fileID: 8300000, guid: 08246ee02aea7fc459e5f6b290a2f35f, type: 3}
+  buttonClickClip: {fileID: 8300000, guid: 390f3df02517bcd4b9292c489862cf60, type: 3}
+  panelOpenClip: {fileID: 8300000, guid: 390f3df02517bcd4b9292c489862cf60, type: 3}
+  panelCloseClip: {fileID: 8300000, guid: 390f3df02517bcd4b9292c489862cf60, type: 3}
+  dragStartClip: {fileID: 8300000, guid: 8db282d30f1f4cf449eb7d41f60df824, type: 3}
+  shootClip: {fileID: 8300000, guid: 66722f449d44f39408e5849a572b20ff, type: 3}
+  hitWallClip: {fileID: 8300000, guid: 1861a0f265c5edc4d9a6cb8c453c006e, type: 3}
+  hitEnemyClip: {fileID: 8300000, guid: e2a19fb2e0714d84aa8ae68341518ac6, type: 3}
+  stoneBreakClip: {fileID: 8300000, guid: 1861a0f265c5edc4d9a6cb8c453c006e, type: 3}
+  enemyDeadClip: {fileID: 8300000, guid: e7f4863d004631c4c8ceaffd24364b96, type: 3}
+  mergeClip: {fileID: 8300000, guid: 45556ad460c844742a91cae594f44e60, type: 3}
+  turnStartClip: {fileID: 8300000, guid: 162ab61359e6c064c9447bcc033ed1e0, type: 3}
+  clearClip: {fileID: 8300000, guid: 3dbfdc0c39e465f459af8ba7bd706949, type: 3}
+  failClip: {fileID: 8300000, guid: e2bd578460201234bab20cb9fe790b94, type: 3}
+  sfxVolume: 1
+  bgmVolume: 0.25
+  buttonClickVolume: 0.6
+  panelOpenVolume: 0.7
+  panelCloseVolume: 0.7
+  dragStartVolume: 0.1
+  shootVolume: 0.1
+  hitWallVolume: 0.5
+  hitEnemyVolume: 0.6
+  stoneBreakVolume: 0.7
+  enemyDeadVolume: 0.8
+  mergeVolume: 0.8
+  turnStartVolume: 0.5
+  clearVolume: 0.9
+  failVolume: 0.9
+--- !u!4 &995852503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995852501}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.44717, y: 1.3416, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1119003884
 GameObject:
   m_ObjectHideFlags: 0
@@ -3666,8 +3741,8 @@ Transform:
   m_GameObject: {fileID: 1975170858}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 608041313}
@@ -4309,3 +4384,4 @@ SceneRoots:
   - {fileID: 154610140}
   - {fileID: 1947008461}
   - {fileID: 1334076437}
+  - {fileID: 995852503}

@@ -50,6 +50,8 @@ public class StageSelectButton : MonoBehaviour
             return;
         }
 
+        SoundManager_1.Instance.PlaySfx(SfxType.ButtonClick);
+
         SelectedStageData.CurrentStageData = stageData;
 
         SceneManager.LoadScene(gameSceneName);

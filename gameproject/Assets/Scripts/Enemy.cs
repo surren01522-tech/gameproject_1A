@@ -65,6 +65,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        SoundManager_1.Instance.PlaySfx(SfxType.HitEnemy);
         hp -= damage;
 
         Debug.Log($"{gameObject.name} 적 체력 감소: {hp}");
@@ -82,6 +83,7 @@ public class Enemy : MonoBehaviour
 
     private void DestroyEnemy()
     {
+        SoundManager_1.Instance.PlaySfx(SfxType.EnemyDead);
         Destroy(gameObject);
     }
 }

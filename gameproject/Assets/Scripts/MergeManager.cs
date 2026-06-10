@@ -23,6 +23,8 @@ public class MergeManager : MonoBehaviour
 
     public void TryMerge(Stone stoneA, Stone stoneB)
     {
+        SoundManager_1.Instance.PlaySfx(SfxType.Merge);
+
         if (stoneA == null || stoneB == null)
         {
             return;

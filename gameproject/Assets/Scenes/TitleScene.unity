@@ -1440,24 +1440,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92949f40f97473f40b562ee616e22daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager_1
-  sfxAudioSource: {fileID: 0}
   bgmAudioSource: {fileID: 0}
+  sfxSourceCount: 10
   mainBgmClip: {fileID: 8300000, guid: 08246ee02aea7fc459e5f6b290a2f35f, type: 3}
   buttonClickClip: {fileID: 8300000, guid: 390f3df02517bcd4b9292c489862cf60, type: 3}
   panelOpenClip: {fileID: 8300000, guid: d5f263ce46275ed4ab1bddf7a5714ee6, type: 3}
   panelCloseClip: {fileID: 8300000, guid: d5f263ce46275ed4ab1bddf7a5714ee6, type: 3}
   dragStartClip: {fileID: 8300000, guid: 8db282d30f1f4cf449eb7d41f60df824, type: 3}
   shootClip: {fileID: 8300000, guid: 66722f449d44f39408e5849a572b20ff, type: 3}
-  hitWallClip: {fileID: 8300000, guid: e2a19fb2e0714d84aa8ae68341518ac6, type: 3}
-  hitEnemyClip: {fileID: 8300000, guid: e2a19fb2e0714d84aa8ae68341518ac6, type: 3}
+  hitWallClip: {fileID: 8300000, guid: 1861a0f265c5edc4d9a6cb8c453c006e, type: 3}
+  hitEnemyClip: {fileID: 8300000, guid: 1861a0f265c5edc4d9a6cb8c453c006e, type: 3}
   stoneBreakClip: {fileID: 8300000, guid: 1861a0f265c5edc4d9a6cb8c453c006e, type: 3}
   enemyDeadClip: {fileID: 8300000, guid: e7f4863d004631c4c8ceaffd24364b96, type: 3}
   mergeClip: {fileID: 8300000, guid: 45556ad460c844742a91cae594f44e60, type: 3}
   turnStartClip: {fileID: 8300000, guid: 162ab61359e6c064c9447bcc033ed1e0, type: 3}
   clearClip: {fileID: 8300000, guid: 3dbfdc0c39e465f459af8ba7bd706949, type: 3}
   failClip: {fileID: 8300000, guid: e2bd578460201234bab20cb9fe790b94, type: 3}
-  sfxVolume: 1
-  bgmVolume: 0.5
+  sfxVolume: 0.5
+  bgmVolume: 0.3
+  buttonClickVolume: 0.6
+  panelOpenVolume: 1
+  panelCloseVolume: 1
+  dragStartVolume: 0.01
+  shootVolume: 0.8
+  hitWallVolume: 0.5
+  hitEnemyVolume: 0.6
+  stoneBreakVolume: 0.7
+  enemyDeadVolume: 0.8
+  mergeVolume: 0.8
+  turnStartVolume: 0.5
+  clearVolume: 0.9
+  failVolume: 0.9
 --- !u!4 &1593857229
 Transform:
   m_ObjectHideFlags: 0

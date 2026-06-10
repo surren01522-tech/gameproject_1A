@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     private void OnBGMToggleChange(bool isOn)
     {
         SoundManager_1.Instance.StopBgm();
+        SoundManager_1.Instance.PlaySfx(SfxType.ButtonClick);
     }
 
     private void OnBGMSliderChange(float volume)
@@ -37,20 +38,17 @@ public class UIManager : MonoBehaviour
     private void OpenOptionPanel()
     {
         panel.SetActive(true);
+        SoundManager_1.Instance.PlaySfx(SfxType.ButtonClick);
     }
 
     private void CloseOptionPanel()
     {
         panel.SetActive(false);
+        SoundManager_1.Instance.PlaySfx(SfxType.ButtonClick);
     }
 
     public void StartGame()
     {
-        if (SoundManager_1.Instance != null)
-        {
-            SoundManager_1.Instance.PlaySfx(SfxType.ButtonClick);
-        }
-
         SceneManager.LoadScene("StageSelectScene");
     }
 }

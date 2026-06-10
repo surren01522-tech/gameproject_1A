@@ -249,6 +249,8 @@ public class StageScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     private void UpdateButtonState()
     {
+        SoundManager_1.Instance.PlaySfx(SfxType.ButtonClick);
+
         if (leftButton != null)
         {
             leftButton.interactable = currentIndex > 0;
