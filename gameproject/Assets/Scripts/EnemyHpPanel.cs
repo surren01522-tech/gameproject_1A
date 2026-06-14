@@ -11,6 +11,12 @@ public class EnemyHpPanel : MonoBehaviour
     [SerializeField] private RectTransform panel;
     [SerializeField] private Button toggleButton;
 
+    [Header("Toggle Icon")]
+    [SerializeField] private Image toggleIconImage;
+    [SerializeField] private Sprite openSprite;   // 패널이 열려 있을 때 보여줄 이미지
+    [SerializeField] private Sprite closeSprite;  // 패널이 닫혀 있을 때 보여줄 이미지
+    [SerializeField] private bool useFlipInsteadOfSprite = false;
+
     [Header("Panel Move")]
     [SerializeField] private float openX = 0f;
     [SerializeField] private float closeX = -260f;
@@ -36,7 +42,12 @@ public class EnemyHpPanel : MonoBehaviour
             panel = GetComponent<RectTransform>();
         }
 
-        targetPanelX = openX;
+        targetPanelX = closeX;
+
+        if (panel != null)
+        {
+            panel.anchoredPosition = new Vector2(closeX, panel.anchoredPosition.y);
+        }
     }
 
     private void Start()
@@ -45,8 +56,14 @@ public class EnemyHpPanel : MonoBehaviour
         {
             toggleButton.onClick.RemoveListener(TogglePanel);
             toggleButton.onClick.AddListener(TogglePanel);
+
+            if (toggleIconImage == null)
+            {
+                toggleIconImage = toggleButton.GetComponent<Image>();
+            }
         }
 
+        UpdateToggleIcon();
         RequestRefresh();
     }
 
@@ -87,6 +104,44 @@ public class EnemyHpPanel : MonoBehaviour
         else
         {
             targetPanelX = closeX;
+        }
+
+        UpdateToggleIcon();
+    }
+
+    private void UpdateToggleIcon()
+    {
+        if (toggleIconImage == null)
+        {
+            return;
+        }
+
+        if (useFlipInsteadOfSprite)
+        {
+            Vector3 scale = toggleIconImage.rectTransform.localScale;
+
+            // 왼쪽 패널 기준
+            // 닫혀있을 때: 열기 방향 = 오른쪽
+            // 열려있을 때: 닫기 방향 = 왼쪽
+            scale.x = isOpen ? -1f : 1f;
+
+            toggleIconImage.rectTransform.localScale = scale;
+            return;
+        }
+
+        if (isOpen)
+        {
+            if (openSprite != null)
+            {
+                toggleIconImage.sprite = openSprite;
+            }
+        }
+        else
+        {
+            if (closeSprite != null)
+            {
+                toggleIconImage.sprite = closeSprite;
+            }
         }
     }
 
