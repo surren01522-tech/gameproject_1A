@@ -15,6 +15,9 @@ public class StageData : ScriptableObject
 
     [Header("Initial Enemies")]
     public List<StageEnemyData> initialEnemies = new List<StageEnemyData>();
+
+    [Header("Background Settings")]
+    public List<Sprite> backgroundLayers = new List<Sprite>();
 }
 
 [System.Serializable]
@@ -31,4 +34,10 @@ public class StageEnemyData
     public GameObject enemyPrefab;
     public int hp = 1;
     public Vector2 position;
+}
+
+[System.Serializable]
+public class BackgroundLayerData
+{
+    public Sprite sprite;
 }
