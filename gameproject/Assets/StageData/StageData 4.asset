@@ -25,3 +25,5 @@ MonoBehaviour:
     hp: 9999
     position: {x: 1, y: 0}
   initialEnemies: []
+  backgroundLayers:
+  - {fileID: 5576854015097683063, guid: 7af71b6f9ea4ea246980aa419faa47d7, type: 3}
