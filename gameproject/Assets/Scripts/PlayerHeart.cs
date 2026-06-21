@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerHeart : MonoBehaviour
 {
+    [SerializeField] private PlayerDamageEffect playerDamageEffect;
+
     [Header("Heart")]
     [SerializeField] private int maxHeart = 3;
     [SerializeField] private int currentHeart = 3;
@@ -47,6 +49,8 @@ public class PlayerHeart : MonoBehaviour
         {
             Die();
         }
+
+        playerDamageEffect.PlayDamageEffect();
     }
 
     public void Heal(int heal)
