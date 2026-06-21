@@ -20,8 +20,10 @@ MonoBehaviour:
     position: {x: 3, y: 1}
   - level: 1
     hp: 9999
-    position: {x: 1, y: 3}
+    position: {x: 1, y: 1}
   - level: 1
     hp: 9999
-    position: {x: -2, y: -2}
+    position: {x: 1, y: 0}
   initialEnemies: []
+  backgroundLayers:
+  - {fileID: 5576854015097683063, guid: 7af71b6f9ea4ea246980aa419faa47d7, type: 3}

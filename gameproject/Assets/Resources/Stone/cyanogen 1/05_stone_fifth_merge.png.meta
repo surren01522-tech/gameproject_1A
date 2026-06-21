@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 7f3c8bcd646afaa44b05f68fd2a1a8cf
+guid: 7fb2d0ce721e2094da41f3edff2b60c8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9153056010169764818
-    second: "\u110B\u1175\u11AF\u1105\u1165\u1109\u1173\u1110\u1173337(6)_0"
-  - first:
-      213: -4961299408843406301
-    second: "\u110B\u1175\u11AF\u1105\u1165\u1109\u1173\u1110\u1173337(6)_1"
+      213: 3181486666184103594
+    second: 05_stone_fifth_merge_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u110B\u1175\u11AF\u1105\u1165\u1109\u1173\u1110\u1173337(6)_0"
+      name: 05_stone_fifth_merge_0
       rect:
         serializedVersion: 2
-        x: 980
-        y: 830
-        width: 7
-        height: 6
+        x: 0
+        y: 0
+        width: 71
+        height: 67
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e24b390cd00d9f080800000000000000
-      internalID: -9153056010169764818
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\u110B\u1175\u11AF\u1105\u1165\u1109\u1173\u1110\u1173337(6)_1"
-      rect:
-        serializedVersion: 2
-        x: 986
-        y: 797
-        width: 144
-        height: 110
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3248887497ce52bb0800000000000000
-      internalID: -4961299408843406301
+      spriteID: aa69b834449e62c20800000000000000
+      internalID: 3181486666184103594
       vertices: []
       indices: 
       edges: []
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\u110B\u1175\u11AF\u1105\u1165\u1109\u1173\u1110\u1173337(6)_0": -9153056010169764818
-      "\u110B\u1175\u11AF\u1105\u1165\u1109\u1173\u1110\u1173337(6)_1": -4961299408843406301
+      05_stone_fifth_merge_0: 3181486666184103594
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -40,3 +40,5 @@ MonoBehaviour:
   - enemyPrefab: {fileID: 3551049063937320561, guid: 29e68bb48494b444aaf01d2a18deb577, type: 3}
     hp: 3
     position: {x: 0, y: -1}
+  backgroundLayers:
+  - {fileID: 0}

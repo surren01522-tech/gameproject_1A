@@ -17,14 +17,20 @@ MonoBehaviour:
   initialStones:
   - level: 1
     hp: 9999
-    position: {x: 5, y: 3}
+    position: {x: 5, y: 1}
   - level: 1
     hp: 9999
-    position: {x: -5, y: 3}
+    position: {x: -5, y: 1}
   - level: 1
     hp: 9999
     position: {x: 5, y: -3}
   - level: 1
     hp: 9999
     position: {x: -5, y: -3}
-  initialEnemies: []
+  initialEnemies:
+  - enemyPrefab: {fileID: 3551049063937320561, guid: 2aa9503944f19954a921a58eca2b34ed, type: 3}
+    hp: 0
+    position: {x: 3, y: 0.5}
+  - enemyPrefab: {fileID: 3551049063937320561, guid: d4ed610359832b9438ea8eda4321d849, type: 3}
+    hp: 0
+    position: {x: -2, y: -1}

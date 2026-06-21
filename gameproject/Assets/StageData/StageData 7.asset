@@ -17,13 +17,13 @@ MonoBehaviour:
   initialStones:
   - level: 1
     hp: 9999
-    position: {x: 0, y: 1}
+    position: {x: 0, y: 0.5}
   - level: 1
     hp: 9999
-    position: {x: 0, y: 3}
+    position: {x: 0, y: 2}
   - level: 1
     hp: 9999
-    position: {x: 0, y: -1}
+    position: {x: 0, y: -1.5}
   - level: 1
     hp: 9999
     position: {x: 0, y: -3}
