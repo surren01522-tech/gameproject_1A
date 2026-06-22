@@ -163,7 +163,7 @@ public class StageStatusPanel : MonoBehaviour
             return;
         }
 
-        int targetLevel = StageManager.Instance.TargetStoneLevel;
+        int targetLevel = SelectedStageData.CurrentStageData.targetStoneLevel;
 
         if (targetText != null)
         {
